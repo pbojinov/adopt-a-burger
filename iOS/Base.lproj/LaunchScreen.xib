@@ -38,11 +38,5 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="550.5" y="455"/>
         </view>
-        <view contentMode="scaleToFill" id="aZh-bw-kCu">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="289" y="208"/>
-        </view>
     </objects>
 </document>
