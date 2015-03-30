@@ -29,17 +29,21 @@ function getIcon(icon) {
 
 var LocationCell = React.createClass({
   render: function() {
-    var icon = getIcon(this.props.movie.categories[0].icon);
+    var icon = getIcon(this.props.location.categories[0].icon);
     return (
-      <View style={styles.container}>
-        <Image 
-          source={{uri: icon }} 
-          style={styles.thumbnail} />
-        <View style={styles.rightContainer}>
-          <Text style={styles.title}>{this.props.movie.name}</Text>
-          <Text style={styles.address}>{getMilesFromMeters(this.props.movie.location.distance)} away</Text>
-          <Text style={styles.year}>{joinAddress(this.props.movie.location.formattedAddress)}</Text>
+      <View>
+      <TouchableHighlight onPress={this.props.onSelect}>
+        <View style={styles.container}>
+          <Image 
+            source={{uri: icon }} 
+            style={styles.thumbnail} />
+          <View style={styles.rightContainer}>
+            <Text style={styles.title}>{this.props.location.name}</Text>
+            <Text style={styles.address}>{getMilesFromMeters(this.props.location.location.distance)} away</Text>
+            <Text style={styles.year}>{joinAddress(this.props.location.location.formattedAddress)}</Text>
+          </View>
         </View>
+      </TouchableHighlight>
       </View>
     );
   }

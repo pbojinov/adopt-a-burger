@@ -1,4 +1,4 @@
-{
+var response = {
     "meta": {
         "code": 200
     },
@@ -115,7 +115,7 @@
                 "facebookName": "Red Robin Gourmet Burgers"
             },
             "location": {
-                "address": "1000 El Paseo de Saratoga",
+                "address": "1000 El Paseo de Sasga",
                 "lat": 37.289760075265754,
                 "lng": -121.99038505554199,
                 "distance": 6278,
@@ -1636,3 +1636,5 @@
         }]
     }
 }
+
+module.exports = response;
