@@ -29,8 +29,8 @@ var LocationScreen = React.createClass({
   render: function() {
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        <View style={styles.mainSection}>
-          <Text>{this.props.location.name}</Text>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>{this.props.location.name}</Text>
           <View style={styles.separator} />
         </View>
       </ScrollView>
@@ -40,26 +40,16 @@ var LocationScreen = React.createClass({
 
 var styles = StyleSheet.create({
   contentContainer: {
-    padding: 10,
-  },
-  rightPane: {
-    justifyContent: 'space-between',
     flex: 1,
+    flexDirection: 'row',
+    // justifyContent: 'center',
   },
-  movieTitle: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: '500',
+  header: {
+    alignItems: 'center',
   },
-  rating: {
-    marginTop: 10,
-  },
-  ratingTitle: {
-    fontSize: 14,
-  },
-  ratingValue: {
+  headerTitle: {
     fontSize: 28,
-    fontWeight: '500',
+    // fontWeight: '700'
   },
   mpaaWrapper: {
     alignSelf: 'flex-start',
@@ -72,9 +62,6 @@ var styles = StyleSheet.create({
     fontFamily: 'Palatino',
     fontSize: 13,
     fontWeight: '500',
-  },
-  mainSection: {
-    flexDirection: 'row',
   },
   detailsImage: {
     width: 134,

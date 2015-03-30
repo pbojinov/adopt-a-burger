@@ -128,7 +128,7 @@ var LocationList = React.createClass({
   selectLocation: function(location: Object) {
     // console.log('selected location ', location);
     this.props.navigator.push({
-      title: location.name,
+      title: '',//location.name,
       component: LocationScreen,
       passProps: {location},
       backButtonTitle: 'Back' // this aint working
