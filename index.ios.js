@@ -22,6 +22,8 @@ var {
   View,
 } = React;
 
+var LocationCell = require('./LocationCell');
+
 function addLocationParamsToURL(latitude, longitude) {
   return REQUEST_URL + '&ll=' + latitude + ',' + longitude;
 }
@@ -91,26 +93,23 @@ var AwesomeProject = React.createClass({
       </View>
     );
   },
+  selectLocation: function(movie: Object) {
+    console.log('selected location');
+    // this.props.navigator.push({
+    //   title: movie.title,
+    //   component: MovieScreen,
+    //   passProps: {movie},
+    // });
+  },
+  // equiv to a movie cell component
   renderMovie: function(movie) {
-    var icon = getIcon(movie.categories[0].icon);
     return (
-      <View style={styles.container}>
-        <Image 
-          source={{uri: icon }} 
-          style={styles.thumbnail} />
-        <View style={styles.rightContainer}>
-          <Text style={styles.title}>{movie.name}</Text>
-          <Text style={styles.address}>{getMilesFromMeters(movie.location.distance)} away</Text>
-          <Text style={styles.year}>{joinAddress(movie.location.formattedAddress)}</Text>
-        </View>
-      </View>
+      <LocationCell
+        onSelect={() => this.selectLocation(movie)}
+        movie={movie}/>
     );
   }
 });
-
-function joinAddress(address) {
-  return address.join(' ');
-}
 
 function filterByDistance(array) {
   var sorted = array.sort(function (a, b) {
@@ -126,18 +125,6 @@ function filterByDistance(array) {
   return sorted;
 }
 
-function getIcon(icon) {
-  var prefix = icon.prefix;
-  var suffix = icon.suffix;
-  var sizes = ['_32', '_44', '_64', '_88'];
-  var bg = 'bg';
-  // https://ss3.4sqi.net/img/categories_v2/food/burger_bg_44.png
-  return prefix + bg + sizes[3] + suffix;
-}
-
-function getMilesFromMeters(result) {
-  return (result *= 0.000621371192).toFixed(2) + ' miles';
-}
 
 var styles = StyleSheet.create({
   wrapper: {
@@ -147,43 +134,6 @@ var styles = StyleSheet.create({
     paddingTop: 20,
     backgroundColor: '#E5E5E5',
   },
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderColor: '#E8E8E8',
-    borderBottomColor: '#CCCECF',
-    borderRadius: 3,
-    borderWidth: 2,
-    marginLeft: 5,
-    marginRight: 5,
-    marginTop: 5,
-    padding: 10,
-  },
-  rightContainer: {
-    flex: 1,
-    paddingLeft: 15,
-  },
-  thumbnail: {
-    width: 84,
-    height: 84,
-  },
-  title: {
-    fontSize: 20,
-    marginBottom: 8,
-    textAlign: 'left',
-    color: '#373737',
-  },
-  year: {
-    textAlign: 'left',
-    color: '#979797',
-  },
-  address: {
-    textAlign: 'left',
-
-  }
 });
 
 AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
