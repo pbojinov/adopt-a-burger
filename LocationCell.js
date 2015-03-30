@@ -6,7 +6,7 @@ var {
   PixelRatio,
   StyleSheet,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   View
 } = React;
 
@@ -15,7 +15,7 @@ function joinAddress(address) {
 }
 
 function getMilesFromMeters(result) {
-  return (result *= 0.000621371192).toFixed(2) + ' miles';
+  return (result *= 0.000621371192).toFixed(2) + ' miles away';
 }
 
 function getIcon(icon) {
@@ -32,18 +32,18 @@ var LocationCell = React.createClass({
     var icon = getIcon(this.props.location.categories[0].icon);
     return (
       <View>
-      <TouchableHighlight onPress={this.props.onSelect}>
+      <TouchableOpacity onPress={this.props.onSelect}>
         <View style={styles.container}>
           <Image 
             source={{uri: icon }} 
             style={styles.thumbnail} />
           <View style={styles.rightContainer}>
             <Text style={styles.title}>{this.props.location.name}</Text>
-            <Text style={styles.address}>{getMilesFromMeters(this.props.location.location.distance)} away</Text>
+            <Text style={styles.address}>{getMilesFromMeters(this.props.location.location.distance)}</Text>
             <Text style={styles.year}>{joinAddress(this.props.location.location.formattedAddress)}</Text>
           </View>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
       </View>
     );
   }

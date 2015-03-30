@@ -18,8 +18,15 @@ var {
 // App Modules
 var LocationCell = require('./LocationCell');
 var LocationScreen = require('./LocationScreen');
-var responseData = require('./foursquare.response');
-var fetch = require('fetch');
+
+// functions
+var filterByDistance = require('./filterByDistance');
+
+// common modules
+// var fetch = require('fetch');
+
+// dev mock data
+var mockResponseData = require('./foursquare.response');
 
 // Foursquare API info
 var API_KEY = 'SBSSS1IL2LXNNU3WD23ICXBJLGK5EI1JJOU20L3OSTI1L0P1';
@@ -61,10 +68,12 @@ var LocationList = React.createClass({
     navigator.geolocation.getCurrentPosition(
       (initialPosition) => {
         this.setState({initialPosition})
-        // this.fetchData();
-        this.loadOfflineData();
+        this.fetchData();
       },
-      (error) => console.error(error)
+      (error) => {
+        console.error(error);
+        // this.loadOfflineData();
+      }
     );
     this.watchID = navigator.geolocation.watchPosition((lastPosition) => {
       this.setState({lastPosition});
@@ -72,7 +81,7 @@ var LocationList = React.createClass({
   },
   loadOfflineData: function() {
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(filterByDistance(responseData.response.venues)),
+      dataSource: this.state.dataSource.cloneWithRows(filterByDistance(mockResponseData.response.venues)),
       loaded: true,
     });  
   },
@@ -133,21 +142,6 @@ var LocationList = React.createClass({
     );
   }
 });
-
-function filterByDistance(array) {
-  var sorted = array.sort(function (a, b) {
-    if (a.location.distance > b.location.distance) {
-      return 1;
-    }
-    if (a.location.distance < b.location.distance) {
-      return -1;
-    }
-    // a must be equal to b
-    return 0;
-  });
-  return sorted;
-}
-
 
 var styles = StyleSheet.create({
   container: {
