@@ -122,6 +122,7 @@ var LocationList = React.createClass({
       title: location.name,
       component: LocationScreen,
       passProps: {location},
+      backButtonTitle: 'Back' // this aint working
     });
   },
   renderRow: function(location: Object)  {
