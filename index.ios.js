@@ -68,7 +68,8 @@ var LocationList = React.createClass({
     navigator.geolocation.getCurrentPosition(
       (initialPosition) => {
         this.setState({initialPosition})
-        this.fetchData();
+        // this.fetchData();
+        this.loadOfflineData();
       },
       (error) => {
         console.error(error);

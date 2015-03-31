@@ -25,12 +25,34 @@ var {
   View,
 } = React;
 
+var getMilesFromMeters = require('./getMilesFromMeters');
+
+var LocationMenu = React.createClass({
+  render: function() {
+    return (
+      <View>
+        <Text style={styles.bodySubtitle}>Menu:</Text>
+        <Text>{this.props.menu.mobileUrl}</Text>
+      </View>
+    );
+  }
+});
+
 var LocationScreen = React.createClass({
   render: function() {
+    var menu = this.props.location.menu ?
+      <LocationMenu menu={this.props.location.menu}/> : null;
+    // menu
+    // phone
+    // homepage
+    // address
+    // map
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.header}>
           <Text style={styles.headerTitle}>{this.props.location.name}</Text>
+          <Text style={styles.headerSubtitle}>{getMilesFromMeters(this.props.location.location.distance)}</Text>
+          <LocationMenu menu={this.props.location.menu}/>
           <View style={styles.separator} />
         </View>
       </ScrollView>
@@ -42,26 +64,34 @@ var styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     flexDirection: 'row',
-    // justifyContent: 'center',
   },
   header: {
-    alignItems: 'center',
+    flex: 1,
+    height: 120,
+    backgroundColor: '#8D48AB',
+    alignItems: 'center', // vertical
+    justifyContent: 'center', // horiziontal
   },
   headerTitle: {
+    fontFamily: 'Helvetica',
+    fontWeight: '200',
     fontSize: 28,
-    // fontWeight: '700'
+    color: '#ffffff',
   },
+  headerSubtitle: {
+    color: '#eeefff'
+  },
+  bodySubtitle: {
+    color: '#8D48AB',
+    fontSize: 12,
+  },
+  // unused styles
   mpaaWrapper: {
     alignSelf: 'flex-start',
     borderColor: 'black',
     borderWidth: 1,
     paddingHorizontal: 3,
     marginVertical: 5,
-  },
-  mpaaText: {
-    fontFamily: 'Palatino',
-    fontSize: 13,
-    fontWeight: '500',
   },
   detailsImage: {
     width: 134,
@@ -73,13 +103,6 @@ var styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
     height: 1 / PixelRatio.get(),
     marginVertical: 10,
-  },
-  castTitle: {
-    fontWeight: '500',
-    marginBottom: 3,
-  },
-  castActor: {
-    marginLeft: 2,
   },
 });
 

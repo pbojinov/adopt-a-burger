@@ -10,12 +10,10 @@ var {
   View
 } = React;
 
+var getMilesFromMeters = require('./getMilesFromMeters');
+
 function joinAddress(address) {
   return address.join(' ');
-}
-
-function getMilesFromMeters(result) {
-  return (result *= 0.000621371192).toFixed(2) + ' miles away';
 }
 
 function getIcon(icon) {
