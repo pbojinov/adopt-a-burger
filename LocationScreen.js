@@ -40,8 +40,9 @@ var LocationMenu = React.createClass({
 
 var LocationScreen = React.createClass({
   render: function() {
-    var menu = this.props.location.menu ?
+    var menu = this.props.location.menu.mobileUrl ?
       <LocationMenu menu={this.props.location.menu}/> : null;
+
     // menu
     // phone
     // homepage
@@ -52,8 +53,10 @@ var LocationScreen = React.createClass({
         <View style={styles.header}>
           <Text style={styles.headerTitle}>{this.props.location.name}</Text>
           <Text style={styles.headerSubtitle}>{getMilesFromMeters(this.props.location.location.distance)}</Text>
-          <LocationMenu menu={this.props.location.menu}/>
           <View style={styles.separator} />
+        </View>
+        <View style={styles.contentBody}>
+          { menu }
         </View>
       </ScrollView>
     );
@@ -63,10 +66,9 @@ var LocationScreen = React.createClass({
 var styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   header: {
-    flex: 1,
     height: 120,
     backgroundColor: '#8D48AB',
     alignItems: 'center', // vertical
@@ -80,6 +82,9 @@ var styles = StyleSheet.create({
   },
   headerSubtitle: {
     color: '#eeefff'
+  },
+  contentBody: {
+
   },
   bodySubtitle: {
     color: '#8D48AB',
