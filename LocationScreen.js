@@ -29,10 +29,11 @@ var getMilesFromMeters = require('./getMilesFromMeters');
 
 var LocationMenu = React.createClass({
   render: function() {
+    var mobileUrl = this.props.menu.mobileUrl || null;
     return (
       <View>
         <Text style={styles.bodySubtitle}>Menu:</Text>
-        <Text>{this.props.menu.mobileUrl}</Text>
+        <Text>{mobileUrl}</Text>
       </View>
     );
   }
@@ -40,7 +41,7 @@ var LocationMenu = React.createClass({
 
 var LocationScreen = React.createClass({
   render: function() {
-    var menu = this.props.location.menu.mobileUrl ?
+    var menu = this.props.location.menu ? 
       <LocationMenu menu={this.props.location.menu}/> : null;
 
     // menu
@@ -56,7 +57,7 @@ var LocationScreen = React.createClass({
           <View style={styles.separator} />
         </View>
         <View style={styles.contentBody}>
-          { menu }
+          {menu}
         </View>
       </ScrollView>
     );
