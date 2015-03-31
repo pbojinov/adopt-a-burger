@@ -26,6 +26,7 @@ var {
 } = React;
 
 var getMilesFromMeters = require('./getMilesFromMeters');
+var joinAddress = require('./joinAddress');
 
 var LocationMenu = React.createClass({
   render: function() {
@@ -39,10 +40,40 @@ var LocationMenu = React.createClass({
   }
 });
 
+var LocationContact = React.createClass({
+  render: function() {
+    return (
+      <View>
+        <Text style={styles.bodySubtitle}>Phone:</Text>
+        <Text>{this.props.contact.formattedPhone}</Text>
+      </View>
+    );
+  }
+});
+
+var LocationAddress = React.createClass({
+  render: function() {
+    return (
+      <View>
+        <Text style={styles.bodySubtitle}>Address:</Text>
+        <Text>
+          {joinAddress(this.props.location.formattedAddress)}
+        </Text>
+      </View>
+    );
+  }
+});
+
 var LocationScreen = React.createClass({
   render: function() {
     var menu = this.props.location.menu ? 
       <LocationMenu menu={this.props.location.menu}/> : null;
+
+    var contact = this.props.location.contact ?
+      <LocationContact contact={this.props.location.contact}/> : null;
+
+    var address = this.props.location.location ?
+      <LocationAddress location={this.props.location.location}/> : null;
 
     // menu
     // phone
@@ -58,6 +89,13 @@ var LocationScreen = React.createClass({
         </View>
         <View style={styles.contentBody}>
           {menu}
+          {menu ? <View style={styles.separator}/> : null }
+
+          {contact}
+          {contact ? <View style={styles.separator}/> : null }
+
+          {address}
+          {address ? <View style={styles.separator}/> : null }
         </View>
       </ScrollView>
     );
@@ -70,7 +108,8 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
   },
   header: {
-    height: 120,
+    height: 100,
+    paddingTop: 15,
     backgroundColor: '#8D48AB',
     alignItems: 'center', // vertical
     justifyContent: 'center', // horiziontal
@@ -85,7 +124,7 @@ var styles = StyleSheet.create({
     color: '#eeefff'
   },
   contentBody: {
-
+    padding: 10,
   },
   bodySubtitle: {
     color: '#8D48AB',

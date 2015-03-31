@@ -11,10 +11,7 @@ var {
 } = React;
 
 var getMilesFromMeters = require('./getMilesFromMeters');
-
-function joinAddress(address) {
-  return address.join(' ');
-}
+var joinAddress = require('./joinAddress');
 
 function getIcon(icon) {
   var prefix = icon.prefix;
@@ -38,7 +35,6 @@ var LocationCell = React.createClass({
           <View style={styles.rightContainer}>
             <Text style={styles.title}>{this.props.location.name}</Text>
             <Text style={styles.address}>{getMilesFromMeters(this.props.location.location.distance)}</Text>
-            <Text style={styles.year}>{joinAddress(this.props.location.location.formattedAddress)}</Text>
           </View>
         </View>
       </TouchableOpacity>
