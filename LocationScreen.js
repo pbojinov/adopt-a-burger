@@ -23,44 +23,76 @@ var {
   StyleSheet,
   Text,
   View,
-  Linking
+  LinkingIOS,
+  AlertIOS
 } = React;
 
 var getMilesFromMeters = require('./getMilesFromMeters');
 var joinAddress = require('./joinAddress');
 
 var LocationMenu = React.createClass({
-  onMenuClick: function(url) {
-    Linking.openURL(url).catch(err => console.error('An error occurred', err));
+  handleClick: function(url) {
+    console.log(url);
+    LinkingIOS.canOpenURL(url, (supported) => {
+      if (!supported) {
+        AlertIOS.alert('Can\'t handle url: ' + url);
+      } else {
+        LinkingIOS.openURL(url);
+      }
+    });
   },
   render: function() {
     var mobileUrl = this.props.menu.mobileUrl || null;
     return (
       <View>
         <Text style={styles.bodySubtitle}>Menu:</Text>
-        <Text onClick={this.onMenuClick.bind(null, mobileUrl)}>{mobileUrl}</Text>
+        <Text onPress={this.handleClick.bind(null, mobileUrl)}>{mobileUrl}</Text>
       </View>
     );
   }
 });
 
 var LocationContact = React.createClass({
+  handleClick: function(url) {
+    // url = 'tel:' + url;
+    // console.log(url);
+    // LinkingIOS.canOpenURL(url, (supported) => {
+    //   if (!supported) {
+    //     AlertIOS.alert('Can\'t handle url: ' + url);
+    //   } else {
+    //     LinkingIOS.openURL(url);
+    //   }
+    // });
+  },
   render: function() {
     return (
       <View>
         <Text style={styles.bodySubtitle}>Phone:</Text>
-        <Text>{this.props.contact.formattedPhone}</Text>
+        <Text onPress={this.handleClick.bind(null, this.props.contact.phone)}>
+          {this.props.contact.formattedPhone}
+        </Text>
       </View>
     );
   }
 });
 
 var LocationAddress = React.createClass({
+  handleClick: function(lat, lng) {
+   // var url = 'geo:' + lat + ',' + lng;
+   //  console.log(url);
+   //  LinkingIOS.canOpenURL(url, (supported) => {
+   //    if (!supported) {
+   //      AlertIOS.alert('Can\'t handle url: ' + url);
+   //    } else {
+   //      LinkingIOS.openURL(url);
+   //    }
+   //  });
+  },
   render: function() {
     return (
       <View>
         <Text style={styles.bodySubtitle}>Address:</Text>
-        <Text>
+        <Text onPress={this.handleClick.bind(null, this.props.location.lat, this.props.location.lng)}>
           {joinAddress(this.props.location.formattedAddress)}
         </Text>
       </View>
@@ -74,7 +106,7 @@ var LocationScreen = React.createClass({
       <LocationMenu menu={this.props.location.menu}/> : null;
 
     var contact = this.props.location.contact ?
-      <LocationContact contact={this.props.location.contact}/> : null;
+      <LocationContact contact={this.props.location.contact} /> : null;
 
     var address = this.props.location.location ?
       <LocationAddress location={this.props.location.location}/> : null;
