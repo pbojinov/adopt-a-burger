@@ -38555,7 +38555,15 @@ var $__0=
 var getMilesFromMeters = require('AwesomeProject/getMilesFromMeters');
 var joinAddress = require('AwesomeProject/joinAddress');
 
-function getIcon(icon) {
+function getIcon(categories) {
+  // default icon
+  var icon = {
+    prefix: "https://ss3.4sqi.net/img/categories_v2/food/burger_",
+    suffix: ".png"
+  };
+  try {
+    icon = categories[0].icon;
+  } catch (ex) {}
   var prefix = icon.prefix;
   var suffix = icon.suffix;
   var sizes = ['_32', '_44', '_64', '_88'];
@@ -38566,12 +38574,13 @@ function getIcon(icon) {
 
 var LocationCell = React.createClass({displayName: "LocationCell",
   render: function() {
-    var icon = getIcon(this.props.location.categories[0].icon);
+    // var icon = getIcon(this.props.location.categories[0].icon);
+    var icon = getIcon(this.props.location.categories);
     return (
       React.createElement(View, null, 
       React.createElement(TouchableOpacity, {onPress: this.props.onSelect}, 
         React.createElement(View, {style: styles.container}, 
-          React.createElement(Image, {
+          icon && React.createElement(Image, {
             source: {uri: icon}, 
             style: styles.thumbnail}), 
           React.createElement(View, {style: styles.rightContainer}, 
@@ -38666,40 +38675,76 @@ var $__0=
   
   
   
-  React,Image=$__0.Image,PixelRatio=$__0.PixelRatio,ScrollView=$__0.ScrollView,StyleSheet=$__0.StyleSheet,Text=$__0.Text,View=$__0.View;
+  
+  
+  React,Image=$__0.Image,PixelRatio=$__0.PixelRatio,ScrollView=$__0.ScrollView,StyleSheet=$__0.StyleSheet,Text=$__0.Text,View=$__0.View,LinkingIOS=$__0.LinkingIOS,AlertIOS=$__0.AlertIOS;
 
 var getMilesFromMeters = require('AwesomeProject/getMilesFromMeters');
 var joinAddress = require('AwesomeProject/joinAddress');
 
 var LocationMenu = React.createClass({displayName: "LocationMenu",
+  handleClick: function(url) {
+    console.log(url);
+    LinkingIOS.canOpenURL(url, function(supported)  {
+      if (!supported) {
+        AlertIOS.alert('Can\'t handle url: ' + url);
+      } else {
+        LinkingIOS.openURL(url);
+      }
+    });
+  },
   render: function() {
     var mobileUrl = this.props.menu.mobileUrl || null;
     return (
       React.createElement(View, null, 
         React.createElement(Text, {style: styles.bodySubtitle}, "Menu:"), 
-        React.createElement(Text, null, mobileUrl)
+        React.createElement(Text, {onPress: this.handleClick.bind(null, mobileUrl)}, mobileUrl)
       )
     );
   }
 });
 
 var LocationContact = React.createClass({displayName: "LocationContact",
+  handleClick: function(url) {
+    // url = 'tel:' + url;
+    // console.log(url);
+    // LinkingIOS.canOpenURL(url, (supported) => {
+    //   if (!supported) {
+    //     AlertIOS.alert('Can\'t handle url: ' + url);
+    //   } else {
+    //     LinkingIOS.openURL(url);
+    //   }
+    // });
+  },
   render: function() {
     return (
       React.createElement(View, null, 
         React.createElement(Text, {style: styles.bodySubtitle}, "Phone:"), 
-        React.createElement(Text, null, this.props.contact.formattedPhone)
+        React.createElement(Text, {onPress: this.handleClick.bind(null, this.props.contact.phone)}, 
+          this.props.contact.formattedPhone
+        )
       )
     );
   }
 });
 
 var LocationAddress = React.createClass({displayName: "LocationAddress",
+  handleClick: function(lat, lng) {
+   // var url = 'geo:' + lat + ',' + lng;
+   //  console.log(url);
+   //  LinkingIOS.canOpenURL(url, (supported) => {
+   //    if (!supported) {
+   //      AlertIOS.alert('Can\'t handle url: ' + url);
+   //    } else {
+   //      LinkingIOS.openURL(url);
+   //    }
+   //  });
+  },
   render: function() {
     return (
       React.createElement(View, null, 
         React.createElement(Text, {style: styles.bodySubtitle}, "Address:"), 
-        React.createElement(Text, null, 
+        React.createElement(Text, {onPress: this.handleClick.bind(null, this.props.location.lat, this.props.location.lng)}, 
           joinAddress(this.props.location.formattedAddress)
         )
       )

@@ -45,9 +45,14 @@ var BurgersApp = React.createClass({
       <NavigatorIOS
         style={styles.container}
         initialRoute={{
-          title: 'Burgers',
+          title: 'Burgers Near Me',
           component: LocationList,
-        }}/>
+          // TODO - doesnt work
+          // TODO - doesnt work
+        }}
+        titleTextColor='white'
+        barTintColor='#e64f61'
+      />
     );
   }
 });
@@ -153,7 +158,7 @@ var styles = StyleSheet.create({
     flex: 1,
   },
   listView: {
-    paddingTop: 20,
+    paddingTop: 3,
     backgroundColor: '#E5E5E5',
   },
 });
