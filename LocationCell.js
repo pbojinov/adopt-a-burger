@@ -13,7 +13,15 @@ var {
 var getMilesFromMeters = require('./getMilesFromMeters');
 var joinAddress = require('./joinAddress');
 
-function getIcon(icon) {
+function getIcon(categories) {
+  // default icon
+  var icon = {
+    prefix: "https://ss3.4sqi.net/img/categories_v2/food/burger_",
+    suffix: ".png"
+  };
+  try {
+    icon = categories[0].icon;
+  } catch (ex) {}
   var prefix = icon.prefix;
   var suffix = icon.suffix;
   var sizes = ['_32', '_44', '_64', '_88'];
@@ -24,14 +32,15 @@ function getIcon(icon) {
 
 var LocationCell = React.createClass({
   render: function() {
-    var icon = getIcon(this.props.location.categories[0].icon);
+    // var icon = getIcon(this.props.location.categories[0].icon);
+    var icon = getIcon(this.props.location.categories);
     return (
       <View>
       <TouchableOpacity onPress={this.props.onSelect}>
         <View style={styles.container}>
-          <Image 
+          {icon && <Image 
             source={{uri: icon }} 
-            style={styles.thumbnail} />
+            style={styles.thumbnail} />}
           <View style={styles.rightContainer}>
             <Text style={styles.title}>{this.props.location.name}</Text>
             <Text style={styles.address}>{getMilesFromMeters(this.props.location.location.distance)}</Text>

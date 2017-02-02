@@ -23,18 +23,22 @@ var {
   StyleSheet,
   Text,
   View,
+  Linking
 } = React;
 
 var getMilesFromMeters = require('./getMilesFromMeters');
 var joinAddress = require('./joinAddress');
 
 var LocationMenu = React.createClass({
+  onMenuClick: function(url) {
+    Linking.openURL(url).catch(err => console.error('An error occurred', err));
+  },
   render: function() {
     var mobileUrl = this.props.menu.mobileUrl || null;
     return (
       <View>
         <Text style={styles.bodySubtitle}>Menu:</Text>
-        <Text>{mobileUrl}</Text>
+        <Text onClick={this.onMenuClick.bind(null, mobileUrl)}>{mobileUrl}</Text>
       </View>
     );
   }

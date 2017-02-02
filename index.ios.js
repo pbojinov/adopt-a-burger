@@ -68,12 +68,12 @@ var LocationList = React.createClass({
     navigator.geolocation.getCurrentPosition(
       (initialPosition) => {
         this.setState({initialPosition})
-        // this.fetchData();
-        this.loadOfflineData();
+        this.fetchData();
+        // this.loadOfflineData();
       },
       (error) => {
         console.error(error);
-        // this.loadOfflineData();
+        this.loadOfflineData();
       }
     );
     this.watchID = navigator.geolocation.watchPosition((lastPosition) => {
