@@ -12,4 +12,7 @@ Simple React Native v1 iOS app to find burgers near you. Uses your location and 
 
 https://github.com/facebook/react-native/issues/240#issuecomment-86977126
 
-![](http://i.imgur.com/AoztcxU.jpg)
+
+# Screenshots
+
+![](https://i.imgur.com/mp59a7j.jpg)
